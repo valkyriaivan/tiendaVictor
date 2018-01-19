@@ -78,6 +78,7 @@ class Producto
     }
 
     public function getHtml(){
+      $redirect=str_replace("state=exclusive","state=normal",$_SERVER["REQUEST_URI"]);
 
       $str = "<div class='panel panel-default'>";
         $str .= "<div class='panel-body'>";
@@ -96,9 +97,9 @@ class Producto
               $str .=  $this->precio . "€";
             }
         $str .= "</span></p>";
-        $str .= "<p class='tituloProduc'>Descripción:</p>";
-        $str .= "<p>" . $this->descripcion . "</p>";
-        $str .= "<a href='/carro.php?action=add&id=" . $this->id . "&redirect=" . urlencode(str_replace("state=exclusive","state=normal",$_SERVER['REQUEST_URI'])) . "' class='btn btn-success pull-right'>Comprar</a>";
+        $str .= "<p class=''>Descripción:</p>";
+        $str .= "<p class='descripcion'>" . $this->descripcion . "</p>";
+        $str .= "<a href='/carro.php?action=add&id=" . $this->id . "&redirect=" . urlencode($redirect) . "' class='btn btn-success pull-right'>Comprar</a>";
       $str .= "</div>";
           $str .= "</div>";
         $str .= "</div>";
@@ -112,16 +113,6 @@ class Producto
         $str .= "<img src='/basededatos/img/256_" . $this->foto . "' alt='' style='display:block; margin:auto; height: 400px; margin-bottom: 50px;'>";
       $str .= "</div>";
       $str .= "<div class='col-md-8'>";
-        // $str .= "<p class='tituloProduc' style='margin-top: 15px;'>Precio: <span style='color:green;'>";
-        //     if ($this->descuento > 0){
-        //       $precio = $this->precio - (($this->precio*$this->descuento)/100);
-        //       $str .= "<strike style='color:red;'>" . $this->precio . "€</strike><sup style='color:red;'>-" . $this->descuento . "%</sup>  " . $precio . "€";
-        //     }
-        //     else{
-        //       $str .=  $this->precio . "€";
-        //     }
-        // $str .= "</span></p>";
-        // $str .= "<p class='tituloProduc'>Descripción:</p>";
         $str .= "<p style='font-size:large;'>" . $this->descripcion . "</p>";
       $str .= "</div>";
       return $str;
@@ -133,7 +124,6 @@ class Producto
               $str .= "<a href='" . $this->url . "'><img src='/basededatos/img/" . $this->foto . "' alt='' style='padding-top: 9px'></a>";
               $str .= "<div class='caption'>";
                   $str .= "<h4><a href='" . $this->url . "'>" . $this->nombre . " <a class='open-modal' href='" . $this->url . "'><span class='fa fa-external-link'></span></a></a></h4>";
-
                   $str .= "<p>" . $this->descripcion . "</p>";
               $str .= "</div>";
               $str .= "<div style='padding: 9px'>";
@@ -149,5 +139,8 @@ class Producto
           $str .= "</div>";
       $str .= "</div>";
       return $str;
+    }
+    public function getJson(){
+      return json_encode(array("HOME"=> "/", "id" => $this->id, "nombre" => $this->nombre, "foto" => $this->foto, "descripcion" =>  $this->descripcion, "precio" => $this->getHtmlPrecio()));
     }
 }

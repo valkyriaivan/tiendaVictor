@@ -5,7 +5,6 @@ require './include/ElCaminas/Producto.php';
 require './include/ElCaminas/Productos.php';
 use ElCaminas\Carrito;
 use ElCaminas\Productos;
-use ElCaminas\Producto;
 $productos = new Productos();
 $carrito = new Carrito();
 
@@ -27,8 +26,8 @@ $carrito = new Carrito();
           $redirect = htmlspecialchars($_SERVER['PHP_SELF']);
         }
         if(isset($_SESSION['username'])){
+          echo "El total de tu compra es: <br>";
           echo $carrito->getTotal();
-          echo $_SESSION['username'];
           include("./include/paypal.php");
         }
         else{

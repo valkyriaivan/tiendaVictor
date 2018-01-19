@@ -1,4 +1,7 @@
 <?php
+    if (!isset($_GET["id"])){
+      header("location: /index.php");
+    }
     $conMenu = true;
     $includes = false;
     $connect = new PDO('mysql:host=localhost;dbname=mi_primera_web;charset=utf8', 'root', 'sa');
@@ -19,6 +22,7 @@
         exit();
       }
     }
+
     $title = "Producto";
     $state = "normal";
     if (isset($_GET["state"])){
@@ -34,13 +38,12 @@
       exit();
     }
     // include "./include/header.php";
-
-            if (isset($_GET["id"])){
-              if ("exclusive" == $state){
-                echo $producto->getHtml();
-              }
-              else{?>
+            if("exclusive" == $state){
+              echo $producto->getHtml();
+            }
+            else{?>
               <div class="col-md-9">
+                  <div id='infoProducto'>
                   <?php
                   if ("normal" == $state){
                     echo $producto->getHtml();
@@ -49,6 +52,7 @@
                     echo $producto->getHtmlPopup();
                   }
                   ?>
+                </div>
                   <?php if ("normal" == $state):?>
                   <div class="panel panel-default">
                     <div class="panel-heading">
@@ -66,27 +70,7 @@
                   </div>
                 <?php endif; ?>
               </div>
-            <?php
-            }
-          }
-          else{?>
-            <div class="col-md-9">
-              <div class="panel panel-default">
-                <div class="panel-heading">
-                  <h3 class="panel-title"><b>Todos los productos </b></h3>
-                </div>
-                <div class="panel-body">
-                  <div class="row">
-                    <?php
-                    foreach($productos->getTodos() as $producto){
-                       echo $producto->getThumbnailHtml();
-                    }
-                    ?>
-                  </div>
-                </div>
-              </div>
-            </div>
-          <?php }?>
+            <?php }?>
         </div>
     </div>
     <!-- /.container -->
@@ -94,12 +78,13 @@
 <?php
 include("./include/modalDomProducto.phtml");
 $bottomScripts = array();
+$bottomScripts[] = "loadProducto.js";
 $bottomScripts[] = "modalDomProducto.js";
 
-if ("normal" == $state){
+if ("normal" == $state || "json" == $state){
   include("./include/footer.php");
 }
-else if ("popuip" == $state){
+else if ("popup" == $state){
   include("./include/footer-popup.php");
 }
 ?>

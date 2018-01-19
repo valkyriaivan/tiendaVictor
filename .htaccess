@@ -1,7 +1,7 @@
 RewriteEngine On
-RewriteRule ^producto/(.*)/([0-9_]+)$ /producto.php?id=$2&nombre=$1 [L]
-RewriteRule ^producto/$ /producto.php [L]
+#RewriteRule ^producto/(.*)/([0-9_]+)$ /producto.php?id=$2&nombre=$1 [L]
+#RewriteRule ^producto/$ /producto.php [L]
 RewriteRule ^index/$ /index.php [L]
-RewriteRule ^categoria/$ /categoria.php [L]
-RewriteRule ^categoria/(.*)/([0-9_]+)$ /categoria.php?id_cat=$2 [L]
+#RewriteRule ^categoria/$ /categoria.php [L]
+#RewriteRule ^categoria/(.*)/([0-9_]+)$ /categoria.php?id_cat=$2 [L]
 #RewriteRule ^categoria/([0-9_]+)/([0-9_]+)/([0-9_]+)$ /categoria.php?id_cat=$1&itemsPerPage=$2&currentPage=$3 [L]

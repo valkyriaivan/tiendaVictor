@@ -16,8 +16,15 @@ $productos = new Productos();
 $carrito = new Carrito();
 
 $conMenu = true;
-include "./include/header.php";
+$state = "normal";
+  if (isset($_GET["state"])){
+    $state = $_GET["state"];
+  }
+  if ("normal" == $state){
+    include("./include/header.php");
+  }elseif("exclusive" == $state){
 
+  }
 
 use JasonGrimes\Paginator;
 
@@ -36,9 +43,8 @@ $currentPage = (isset($_GET["currentPage"]) ? $_GET["currentPage"] : 1);
 // $urlPattern = "/categoria/" . "(:num)/" . $itemsPerPage . "/" . $_GET["id_cat"];
 $urlPattern = "/categoria.php?id_cat=" . $_GET["id_cat"] . "&itemsPerPage=$itemsPerPage&currentPage=(:num)";
 $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern);
-
 ?>
-
+        <?php if ("normal" == $state):?>
             <div class="col-md-9">
               <div class="panel panel-default">
                 <div class="panel-heading">
@@ -55,29 +61,37 @@ $paginator = new Paginator($totalItems, $itemsPerPage, $currentPage, $urlPattern
                     }
                   }?>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body" id="data-container">
+                  <?php endif; ?>
                   <div class="row">
                     <?php
                       foreach($productos->getProductosByCategoria($_GET["id_cat"], $itemsPerPage, $currentPage) as $producto){
                          echo $producto->getThumbnailHtml();
                       }
                   // echo $paginator;
-                  ?>
+                    ?>    
                   </div>
                   <div style="position:relative; float:right;">
                   <?php
                   include './include/JasonGrimes/examples/pager.phtml';
                   ?>
                   </div>
+                  <?php if ("normal" == $state):?>
                 </div>
             </div>
           </div>
+          <?php endif; ?>
   </div>
     <!-- /.container -->
 
 <?php
-include("./include/modalDomProducto.phtml");
-$bottomScripts = array();
-$bottomScripts[] = "modalDomProducto.js";
-include "./include/footer.php";
+
+if ("normal" == $state){
+  include("./include/modalDomProducto.phtml");
+  $bottomScripts = array();
+  $bottomScripts[] = "loadCategorias.js";
+  $bottomScripts[] = "modalDomProducto.js";
+  include("./include/footer.php");
+}
+
 ?>

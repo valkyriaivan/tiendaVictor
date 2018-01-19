@@ -1,18 +1,10 @@
 <?php
   $title = "Plantas el Caminàs -> ";
-  $connect = new PDO('mysql:host=localhost;dbname=mi_primera_web;charset=utf8', 'root', 'sa');
-  require './include/ElCaminas/Carrito.php';
-  require './include/ElCaminas/Productos.php';
-  require './include/ElCaminas/Producto.php';
   use ElCaminas\Carrito;
   use ElCaminas\Productos;
-  use ElCaminas\Producto;
   $productos = new Productos();
   $carrito = new Carrito();
-
-
   $conMenu=true;
-
   include("./include/header.php");
 
   if (isset($_GET["action"])){

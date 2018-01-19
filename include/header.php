@@ -1,6 +1,6 @@
 <?php
 session_start();
-// $connect = new PDO('mysql:host=localhost;dbname=mi_primera_web;charset=utf8', 'root', 'sa');
+$connect = new PDO('mysql:host=localhost;dbname=mi_primera_web;charset=utf8', 'root', 'sa');
 // require './include/ElCaminas/Carrito.php';
 // require './include/ElCaminas/Producto.php';
 // require './include/ElCaminas/Productos.php';
@@ -126,7 +126,12 @@ session_start();
 </head>
 
 <body>
-
+  <div id="mask" style="position: fixed; width: 100%; height: 100%; top: 0px; left: 0px; z-index: 1040;
+  background-color: white;  opacity: .9; display:none">
+    <div class="alert alert-info" role="alert" style='position: absolute;  top: 30%;  left: 50%;  transform: translate(-30%, -50%);'>
+        <img src='/basededatos/img/loading_animation.gif'> Cargando ...
+    </div>
+  </div>
   <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
       <div class="container">
           <!-- Brand and toggle get grouped for better mobile display -->
@@ -205,7 +210,7 @@ session_start();
                             <?php
                               $resultPadre = $statementPadre->fetchAll();
                               foreach($resultPadre as $row){?>
-                                <a href="/categoria/<?php echo str_replace(' ', '-', $row["nombre"]) . "/" . $row["id"];?>" class="list-group-item sub-item" data-parent="#sub_<?php echo $row["id_padre"];?>" style="padding-left: 50px;">
+                                <a href="/categoria.php?id_cat=<?php echo $row["id"];?>" class="list-group-item sub-item" data-parent="#sub_<?php echo $row["id_padre"];?>" style="padding-left: 50px;">
                                   <span class="fa <?php echo $row["icon"] ?> fa-lg fa-fw"></span>
                                   <span><?php echo $row["nombre"] ?> </span>
                                 </a>
@@ -216,7 +221,8 @@ session_start();
                         <?php
                         }
                         else{?>
-                          <a class="list-group-item" data-remote="true" href="/categoria/<?php echo str_replace(' ', '-', $row["nombre"]) . "/" . $row["id"];?>" id="<?php echo $row["id"];?>" style="padding-left: 25px;">
+                          <!-- <a class="list-group-item" data-remote="true" href="/categoria/<?php echo str_replace(' ', '-', $row["nombre"]) . "/" . $row["id"];?>" id="<?php echo $row["id"];?>" style="padding-left: 25px;"> -->
+                          <a class="list-group-item" data-remote="true" href="/categoria.php?id_cat=<?php echo $row["id"];?>" id="<?php echo $row["id"];?>" style="padding-left: 25px;">
                             <span class="fa <?php echo $row["icon"] ?> fa-lg fa-fw"></span>
                             <span><?php echo $row["nombre"] ?> </span>
                           </a>
